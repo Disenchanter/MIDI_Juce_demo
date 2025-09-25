@@ -1,0 +1,39 @@
+# macOS Finder metadata
+.DS_Store
+
+# Xcode user data
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad
+
+# IDE folders
+.vscode/
+.idea/
+
+# CMake and JUCE build directories
+/build/
+/PianoTrackReader/build/
+JUCE/
+~/
+
+# Generated Xcode projects and intermediate build artefacts
+**/PianoTrackReader.xcodeproj/
+**/PianoTrackReader_artefacts/
+**/PianoTrackReader_AU.build/
+**/PianoTrackReader_VST3.build/
+**/PianoTrackReader_Standalone.build/
+**/PianoTrackReader_AU.dir/
+**/PianoTrackReader_VST3.dir/
+**/PianoTrackReader_Standalone.dir/
+
+# CMake generated files
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+CMakeScripts/
+Makefile
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="piano1" name="PianoTrackReader" projectType="audioplug"
+              useAppConfig="0" addUsingNamespaceToJuceHeader="0" displaySplashScreen="1"
+              jucerFormatVersion="1" pluginFormats="buildVST3,buildAU" pluginName="PianoTrackReader"
+              pluginDesc="A VST plugin that reads piano tracks and outputs note information"
+              pluginManufacturer="JUCEDemoCompany" pluginManufacturerCode="Jdco"
+              pluginCode="Ptrk" pluginChannelConfigs="" pluginIsSynth="0"
+              pluginWantsMidiIn="1" pluginProducesMidiOut="1" pluginIsMidiEffectPlugin="0"
+              pluginEditorRequiresKeys="0" pluginAUExportPrefix="PianoTrackReaderAU"
+              pluginRTASCategory="" aaxIdentifier="com.jucedemocompany.pianotrackreader"
+              pluginAAXCategory="2" jucerVersion="7.0.9" companyName="JUCEDemoCompany"
+              companyCopyright="2024 JUCEDemoCompany" companyWebsite="https://juce.com"
+              companyEmail="info@juce.com" reportAppUsage="0" splashScreenColour="Dark">
+  <MAINGROUP id="main" name="PianoTrackReader">
+    <GROUP id="Source" name="Source">
+      <FILE id="plugin_processor" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="plugin_processor_h" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="plugin_editor" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="plugin_editor_h" name="PluginEditor.h" compile="0" resource="0"
+            file="Source/PluginEditor.h"/>
+      <FILE id="midi_note_detector" name="MidiNoteDetector.cpp" compile="1" resource="0"
+            file="Source/MidiNoteDetector.cpp"/>
+      <FILE id="midi_note_detector_h" name="MidiNoteDetector.h" compile="0" resource="0"
+            file="Source/MidiNoteDetector.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="PianoTrackReader" headerPath=""
+                       libraryPath="" cppLanguageStandard="17" osxSDK="default" osxCompatibility="10.11"
+                       osxArchitecture="x86_64,arm64"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="PianoTrackReader" headerPath=""
+                       libraryPath="" cppLanguageStandard="17" osxSDK="default" osxCompatibility="10.11"
+                       osxArchitecture="x86_64,arm64"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>
