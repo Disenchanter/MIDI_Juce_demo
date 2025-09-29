@@ -4,10 +4,10 @@
 PianoTrackReaderAudioProcessorEditor::PianoTrackReaderAudioProcessorEditor (PianoTrackReaderAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    // 设置窗口大小
+    // Set window size
     setSize (600, 500);
     
-    // 设置标题标签
+    // Set title label
     titleLabel.setText ("Piano Track Reader - MIDI File Analyzer", juce::dontSendNotification);
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -16,7 +16,7 @@ PianoTrackReaderAudioProcessorEditor::PianoTrackReaderAudioProcessorEditor (Pian
     titleLabel.setJustificationType (juce::Justification::centred);
     addAndMakeVisible (titleLabel);
     
-    // 设置文件路径标签
+    // Set file path label
     filePathLabel.setText ("No file loaded", juce::dontSendNotification);
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -26,7 +26,7 @@ PianoTrackReaderAudioProcessorEditor::PianoTrackReaderAudioProcessorEditor (Pian
     filePathLabel.setColour (juce::Label::textColourId, juce::Colours::lightgrey);
     addAndMakeVisible (filePathLabel);
     
-    // 设置音符显示区域
+    // Set note display area
     noteDisplayArea.setMultiLine (true);
     noteDisplayArea.setReturnKeyStartsNewLine (true);
     noteDisplayArea.setReadOnly (true);
@@ -39,12 +39,12 @@ PianoTrackReaderAudioProcessorEditor::PianoTrackReaderAudioProcessorEditor (Pian
     noteDisplayArea.setText ("Click 'Load MIDI File' to analyze a MIDI file\nSupported formats: .mid, .midi");
     addAndMakeVisible (noteDisplayArea);
     
-    // 设置加载文件按钮
+    // Set load file button
     loadFileButton.setButtonText ("Load MIDI File");
     loadFileButton.onClick = [this]() { loadMidiFile(); };
     addAndMakeVisible (loadFileButton);
     
-    // 设置清除按钮
+    // Set clear button
     clearButton.setButtonText ("Clear Analysis");
     clearButton.onClick = [this]()
     {
@@ -57,10 +57,10 @@ PianoTrackReaderAudioProcessorEditor::PianoTrackReaderAudioProcessorEditor (Pian
     };
     addAndMakeVisible (clearButton);
     
-    // 启动定时器，每 50ms 更新一次显示
+    // Start timer, update display every 50ms
     startTimer (50);
     
-    // 获取当前采样率
+    // Get current sample rate
     lastSampleRate = audioProcessor.getSampleRate();
     if (lastSampleRate <= 0) lastSampleRate = 44100.0;
 }
@@ -72,7 +72,7 @@ PianoTrackReaderAudioProcessorEditor::~PianoTrackReaderAudioProcessorEditor()
 
 void PianoTrackReaderAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // 设置渐变背景
+    // Set gradient background
     g.fillAll (juce::Colour (0xff2d3748));
     
     auto bounds = getLocalBounds();
@@ -81,7 +81,7 @@ void PianoTrackReaderAudioProcessorEditor::paint (juce::Graphics& g)
     g.setGradientFill (gradient);
     g.fillRect (bounds);
     
-    // 绘制边框
+    // Draw border
     g.setColour (juce::Colour (0xff718096));
     g.drawRect (bounds, 2);
 }
@@ -90,32 +90,32 @@ void PianoTrackReaderAudioProcessorEditor::resized()
 {
     auto bounds = getLocalBounds().reduced (10);
     
-    // 标题区域
+    // Title area
     titleLabel.setBounds (bounds.removeFromTop (30));
     bounds.removeFromTop (5);
     
-    // 文件路径显示区域
+    // File path display area
     filePathLabel.setBounds (bounds.removeFromTop (20));
     bounds.removeFromTop (10);
     
-    // 按钮区域
+    // Button area
     auto buttonArea = bounds.removeFromBottom (40);
     clearButton.setBounds (buttonArea.removeFromRight (120));
     buttonArea.removeFromRight (10);
     loadFileButton.setBounds (buttonArea.removeFromRight (120));
     bounds.removeFromBottom (10);
     
-    // 音符显示区域
+    // Note display area
     noteDisplayArea.setBounds (bounds);
 }
 
 void PianoTrackReaderAudioProcessorEditor::timerCallback()
 {
-    // 在文件模式下，不需要实时更新
-    // 只在文件分析完成后更新显示
+    // In file mode, no real-time update needed
+    // Only update display after file analysis is complete
     if (!fileLoaded)
     {
-        // 可以在这里添加任何需要定期检查的逻辑
+        // Can add any logic that needs periodic checking here
         return;
     }
 }
@@ -195,11 +195,11 @@ void PianoTrackReaderAudioProcessorEditor::analyzeMidiFile(const juce::File& fil
         return;
     }
     
-    // 清除之前的数据
+    // Clear previous data
     noteHistory.clear();
     activeNotes.clear();
     
-    // 获取MIDI文件信息
+    // Get MIDI file information
     int numTracks = midiFile.getNumTracks();
     int ticksPerQuarter = midiFile.getTimeFormat();
     
@@ -209,7 +209,7 @@ void PianoTrackReaderAudioProcessorEditor::analyzeMidiFile(const juce::File& fil
     analysisText << "Tracks: " << numTracks << "\n";
     analysisText << "Ticks per Quarter Note: " << ticksPerQuarter << "\n\n";
     
-    // 分析每个轨道
+    // Analyze each track
     int totalNotes = 0;
     std::map<int, int> noteCount; // note number -> count
     
@@ -264,7 +264,7 @@ void PianoTrackReaderAudioProcessorEditor::analyzeMidiFile(const juce::File& fil
         analysisText << "Track " << (trackIndex + 1) << " Notes: " << trackNotes << "\n\n";
     }
     
-    // 显示统计信息
+    // Display statistics
     analysisText << "=== Statistics ===\n";
     analysisText << "Total Notes: " << totalNotes << "\n";
     analysisText << "Unique Notes Used:\n";
@@ -279,7 +279,7 @@ void PianoTrackReaderAudioProcessorEditor::analyzeMidiFile(const juce::File& fil
     noteDisplayArea.setText (analysisResults);
     fileLoaded = true;
     
-    // 自动滚动到顶部
+    // Automatically scroll to top
     noteDisplayArea.moveCaretToTop(false);
 }
 
@@ -303,8 +303,8 @@ juce::String PianoTrackReaderAudioProcessorEditor::formatTime (double timeInSamp
 
 juce::String PianoTrackReaderAudioProcessorEditor::formatTimeFromTicks (int ticks, int ticksPerQuarter, double tempo)
 {
-    // 将 ticks 转换为秒
-    // 假设默认 tempo = 120 BPM (每分钟120拍)
+    // Convert ticks to seconds
+    // Assume default tempo = 120 BPM (120 beats per minute)
     double secondsPerBeat = 60.0 / tempo;
     double secondsPerTick = secondsPerBeat / ticksPerQuarter;
     double timeInSeconds = ticks * secondsPerTick;
@@ -323,36 +323,36 @@ juce::String PianoTrackReaderAudioProcessorEditor::formatTimeFromTicks (int tick
 
 void PianoTrackReaderAudioProcessorEditor::createSampleMidiFile(const juce::File& directory)
 {
-    // 创建一个简单的示例MIDI文件
+    // Create a simple sample MIDI file
     juce::MidiFile midiFile;
     juce::MidiMessageSequence track;
     
-    // 设置一些基本参数
+    // Set some basic parameters
     int ticksPerQuarter = 480;
     midiFile.setTicksPerQuarterNote(ticksPerQuarter);
     
-    // 添加一些示例音符 (C大调音阶)
+    // Add some sample notes (C major scale)
     juce::Array<int> notes = {60, 62, 64, 65, 67, 69, 71, 72}; // C4 to C5
     
     for (int i = 0; i < notes.size(); ++i)
     {
         int noteNumber = notes[i];
-        int startTime = i * ticksPerQuarter / 2; // 每个音符间隔半拍
-        int duration = ticksPerQuarter / 4; // 每个音符持续四分之一拍
+        int startTime = i * ticksPerQuarter / 2; // Each note interval is half beat
+        int duration = ticksPerQuarter / 4; // Each note duration is quarter beat
         
-        // 添加Note On消息
+        // Add Note On message
         juce::MidiMessage noteOn = juce::MidiMessage::noteOn(1, noteNumber, (juce::uint8)100);
         track.addEvent(noteOn, startTime);
         
-        // 添加Note Off消息
+        // Add Note Off message
         juce::MidiMessage noteOff = juce::MidiMessage::noteOff(1, noteNumber);
         track.addEvent(noteOff, startTime + duration);
     }
     
-    // 添加轨道到MIDI文件
+    // Add track to MIDI file
     midiFile.addTrack(track);
     
-    // 保存文件
+    // Save file
     juce::File sampleFile = directory.getChildFile("sample.mid");
     juce::FileOutputStream outputStream(sampleFile);
     
@@ -361,7 +361,7 @@ void PianoTrackReaderAudioProcessorEditor::createSampleMidiFile(const juce::File
         midiFile.writeTo(outputStream);
         outputStream.flush();
         
-        // 分析刚创建的文件
+        // Analyze the just created file
         currentMidiFile = sampleFile;
         filePathLabel.setText ("Created and loading: " + sampleFile.getFileName(), juce::dontSendNotification);
         analyzeMidiFile (sampleFile);

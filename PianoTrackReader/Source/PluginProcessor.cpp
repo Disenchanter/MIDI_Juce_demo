@@ -91,13 +91,13 @@ void PianoTrackReaderAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
 {
     juce::ScopedNoDenormals noDenormals;
     
-    // 处理 MIDI 消息
+    // Process MIDI messages
     for (const auto metadata : midiMessages)
     {
         const auto midiMessage = metadata.getMessage();
         int samplePosition = metadata.samplePosition;
         
-        // 计算绝对时间戳
+        // Calculate absolute timestamp
         double absoluteTimeStamp = totalSampleCount + samplePosition;
         
         if (midiMessage.isNoteOn())
@@ -105,12 +105,12 @@ void PianoTrackReaderAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
             int noteNumber = midiMessage.getNoteNumber();
             juce::String noteName = getNoteNameFromMidiNumber(noteNumber);
             
-            // 线程安全地添加事件
+            // Thread-safely add event
             juce::ScopedLock lock (eventLock);
             recentNoteEvents.push_back (MidiNoteEvent (noteName, noteNumber, absoluteTimeStamp, true));
             activeNotes[noteNumber] = true;
             
-            // 输出到控制台
+            // Output to console
             juce::Logger::writeToLog("NOTE ON: " + noteName + " at time " + juce::String(absoluteTimeStamp));
         }
         else if (midiMessage.isNoteOff())
@@ -118,17 +118,17 @@ void PianoTrackReaderAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
             int noteNumber = midiMessage.getNoteNumber();
             juce::String noteName = getNoteNameFromMidiNumber(noteNumber);
             
-            // 线程安全地添加事件
+            // Thread-safely add event
             juce::ScopedLock lock (eventLock);
             recentNoteEvents.push_back (MidiNoteEvent (noteName, noteNumber, absoluteTimeStamp, false));
             activeNotes[noteNumber] = false;
             
-            // 输出到控制台
+            // Output to console
             juce::Logger::writeToLog("NOTE OFF: " + noteName + " at time " + juce::String(absoluteTimeStamp));
         }
     }
     
-    // 更新总样本计数
+    // Update total sample count
     totalSampleCount += buffer.getNumSamples();
 }
 
